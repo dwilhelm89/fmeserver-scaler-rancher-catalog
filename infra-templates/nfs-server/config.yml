@@ -1,0 +1,6 @@
+name: NFS server for FME Server
+description: |
+  Deploys NFS server and driver to use with FME Server
+version: 5-1
+category: Storage
+maintainer: Claude Vessaz <claude.vessaz@safe.com>
