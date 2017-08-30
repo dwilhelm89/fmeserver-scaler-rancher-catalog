@@ -14,8 +14,9 @@ catalog:
       required: true
       default: localhost
       type: string
-
-services:
-  fmeserverengine:
-    milli_cpu_reservation: 1000
-    scale: 1
+    - variable: MEMORY_RESERVATION
+      label: Memory Reservation
+      description: Set a memory reservation to prevent Rancher from putting all engines on the first host to come up
+      required: true
+      default: 3984588800
+      type: string
