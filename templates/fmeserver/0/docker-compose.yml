@@ -1,10 +1,7 @@
-
-
-
 version: "2"
 services:
  fmeserverdb:
-  image: safesoftware/fmeserver-db:17539
+  image: safesoftware/fmeserver-db:${BUILD}
   volumes:
    - database:/var/lib/postgresql/data
   restart: always
@@ -12,7 +9,7 @@ services:
     io.rancher.scheduler.affinity:host_label: role=core
 
  fmeservercore:
-  image: safesoftware/fmeserver-core:17539
+  image: safesoftware/fmeserver-core:${BUILD}
   volumes:
    - fmeserver:/data/fmeserverdata
    - testvolume:/test
@@ -27,13 +24,13 @@ services:
     io.rancher.scheduler.affinity:host_label: role=core
 
  fmeserverweb:
-  image: safesoftware/fmeserver-web:17539
+  image: safesoftware/fmeserver-web:${BUILD}
   volumes:
    - fmeserver:/data/fmeserverdata
   ports:
    - 80:8080
   environment:
-   - EXTERNALHOSTNAME=localhost
+   - EXTERNALHOSTNAME=${EXTERNAL_HOSTNAME}
   hostname: fmeserverweb
   restart: always
   depends_on: 
@@ -42,27 +39,27 @@ services:
    io.rancher.scheduler.affinity:host_label: role=core
  
  fmeserverengine:
-  image: safesoftware/fmeserver-engine:17539
+  image: safesoftware/fmeserver-engine:${BUILD}
   volumes:
    - fmeserver:/data/fmeserverdata
   restart: always
   depends_on: 
    - fmeservercore
   environment:
-   - EXTERNALHOSTNAME=localhost
+   - EXTERNALHOSTNAME=${EXTERNAL_HOSTNAME}
   labels:
    io.rancher.container.hostname_override: container_name
    io.rancher.scheduler.affinity:host_label: role=worker
    
 fmeserverenginescaler:
-  image: safesoftware/fmeserver-engine:17539
+  image: safesoftware/fmeserver-engine:${BUILD}
   volumes:
    - fmeserver:/data/fmeserverdata
   restart: always
   depends_on: 
    - fmeservercore
   environment:
-   - EXTERNALHOSTNAME=localhost
+   - EXTERNALHOSTNAME=${EXTERNAL_HOSTNAME}
   labels:
    io.rancher.container.hostname_override: container_name
    io.rancher.scheduler.affinity:host_label: role=core

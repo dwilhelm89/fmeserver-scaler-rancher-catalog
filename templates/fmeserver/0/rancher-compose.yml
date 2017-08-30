@@ -16,5 +16,6 @@ catalog:
       type: string
 
 services:
- fmeserverengine:
-  milli_cpu_reservation: 1000
+  fmeserverengine:
+    milli_cpu_reservation: 1000
+    scale: 1
