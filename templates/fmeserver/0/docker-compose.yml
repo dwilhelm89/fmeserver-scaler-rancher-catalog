@@ -20,6 +20,7 @@ services:
     restart: always
     depends_on: 
       - fmeserverdb
+      - fmeserverqueue
     labels:
       io.rancher.scheduler.affinity:host_label: role=core
 
@@ -37,6 +38,15 @@ services:
       - fmeservercore
     labels:
       io.rancher.scheduler.affinity:host_label: role=core
+      
+  fmeserverqueue:
+    image: safesoftware/fmeserver-queue:${BUILD}
+    hostname: fmeserverqueue
+    volumes:
+      - fmeserver:/data/fmeserverdata
+    restart: always
+    labels:
+      io.rancher.scheduler.affinity:host_label: role=core
  
   fmeserverengine:
     image: safesoftware/fmeserver-engine:${BUILD}
@@ -47,6 +57,7 @@ services:
       - fmeservercore
     environment:
       - EXTERNALHOSTNAME=${EXTERNAL_HOSTNAME}
+      - FME_ENV_ENGINE_QUEUES=ScaledEngines
     mem_reservation: ${MEMORY_RESERVATION}
     labels:
       io.rancher.container.hostname_override: container_name
@@ -61,6 +72,7 @@ services:
       - fmeservercore
     environment:
       - EXTERNALHOSTNAME=${EXTERNAL_HOSTNAME}
+      - FME_ENV_ENGINE_QUEUES=Scaler
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.scheduler.affinity:host_label: role=core
