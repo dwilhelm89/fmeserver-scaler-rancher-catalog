@@ -7,7 +7,7 @@ catalog:
       label: Build Number
       description: The build number of the FME Server to deploy
       required: true
-      default: 17539
+      default: 18199
       type: string
     - variable: EXTERNAL_HOSTNAME
       label: FME Server external hostname
