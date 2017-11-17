@@ -61,7 +61,7 @@ services:
     mem_reservation: ${MEMORY_RESERVATION}
     labels:
       io.rancher.container.hostname_override: container_name
-      io.rancher.scheduler.affinity:host_label: role=worker
+      io.rancher.scheduler.affinity:host_label: role=core
    
   fmeserverenginescaler:
     image: safesoftware/fmeserver-engine:${BUILD}
