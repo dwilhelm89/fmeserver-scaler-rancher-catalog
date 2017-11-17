@@ -4,7 +4,6 @@ services:
     image: safesoftware/fmeserver-db:${BUILD}
     volumes:
       - database:/var/lib/postgresql/data
-    restart: always
     labels:
       io.rancher.scheduler.affinity:host_label: role=core
 
@@ -17,7 +16,6 @@ services:
       - "25:7125"
       - 7078:7078
     hostname: fmeservercore
-    restart: always
     depends_on: 
       - fmeserverdb
       - fmeserverqueue
@@ -33,7 +31,6 @@ services:
     environment:
       - EXTERNALHOSTNAME=${EXTERNAL_HOSTNAME}
     hostname: fmeserverweb
-    restart: always
     depends_on: 
       - fmeservercore
     labels:
@@ -44,7 +41,6 @@ services:
     hostname: fmeserverqueue
     volumes:
       - fmeserver:/data/fmeserverdata
-    restart: always
     labels:
       io.rancher.scheduler.affinity:host_label: role=core
  
@@ -52,7 +48,6 @@ services:
     image: safesoftware/fmeserver-engine:${BUILD}
     volumes:
       - fmeserver:/data/fmeserverdata
-    restart: always
     depends_on: 
       - fmeservercore
     environment:
@@ -67,7 +62,6 @@ services:
     image: safesoftware/fmeserver-engine:${BUILD}
     volumes:
       - fmeserver:/data/fmeserverdata
-    restart: always
     depends_on: 
       - fmeservercore
     environment:
