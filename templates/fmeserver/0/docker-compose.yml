@@ -81,5 +81,5 @@ volumes:
    database:
       driver: local
    fmeserver:
-      driver: rancher-nfs
+      driver: local
  
